@@ -48,4 +48,12 @@ interface ClientInterface
      * @return string
      */
     public function updateRecords($module, $id, $data, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getNoteTypes(array $additionalParams, $responseFormat);
 }
