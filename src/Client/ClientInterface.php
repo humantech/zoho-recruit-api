@@ -76,4 +76,13 @@ interface ClientInterface
      * @return array
      */
     public function getFields($module, $data, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  array  $candidateIds
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function changeStatus(array $candidateIds, array $additionalParams, $responseFormat);
 }
