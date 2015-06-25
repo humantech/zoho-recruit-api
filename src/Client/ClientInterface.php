@@ -96,4 +96,13 @@ interface ClientInterface
      * @return string
      */
     public function uploadFile($id, $resource, $type, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $id
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return mixed
+     */
+    public function downloadFile($id, array $additionalParams, $responseFormat);
 }
