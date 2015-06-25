@@ -5,6 +5,7 @@ namespace Humantech\Zoho\Recruit\Api\Client;
 use GuzzleHttp\Psr7\Response;
 use Humantech\Zoho\Recruit\Api\Formatter\ResponseListFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\ResponseRowFormatter;
+use Humantech\Zoho\Recruit\Api\Formatter\XmlRequestDataFormatter;
 use Humantech\Zoho\Recruit\Api\Unserializer\UnserializerBuilder;
 
 class Client extends AbstractClient implements ClientInterface
@@ -204,7 +205,7 @@ class Client extends AbstractClient implements ClientInterface
 
         return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -213,6 +214,25 @@ class Client extends AbstractClient implements ClientInterface
         $additionalParams['id'] = $id;
 
         $response = $this->callApi('GET', $module, 'getRecordById', $responseFormat, $additionalParams);
+
+        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $formatter = new XmlRequestDataFormatter();
+
+        $formatter = $formatter->formatter(array(
+            'module' => $module,
+            'data'   => $data,
+        ));
+
+        $additionalParams['xmlData'] = $formatter->getOutput();
+
+        $response = $this->callApi('POST', $module, 'addRecords', $responseFormat, $additionalParams);
 
         return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
     }
