@@ -256,4 +256,16 @@ class Client extends AbstractClient implements ClientInterface
 
         return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getNoteTypes(array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Notes';
+
+        $response = $this->callApi('GET', $module, 'getNoteTypes', $responseFormat, $additionalParams);
+
+        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+    }
 }
