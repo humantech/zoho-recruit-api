@@ -46,6 +46,10 @@ class Client extends AbstractClient implements ClientInterface
             throw new \InvalidArgumentException(sprintf('The method %s is not registered', $method));
         }
 
+        if (!$this->hasResponseFormat($responseFormat)) {
+            throw new \InvalidArgumentException(sprintf('The response format %s is not registered', $responseFormat));
+        }
+
         if (!isset($requestParameters['scope'])) {
             $requestParameters['scope'] = self::API_DEFAULT_SCOPE;
         }
@@ -91,6 +95,19 @@ class Client extends AbstractClient implements ClientInterface
             'getModules',
             'getAssociatedCandidates',
             'getSearchRecords',
+        ));
+    }
+
+    /**
+     * @param string $responseFormat
+     *
+     * @return bool
+     */
+    protected function hasResponseFormat($responseFormat)
+    {
+        return in_array(strtolower($responseFormat), array(
+            'json',
+            'xml',
         ));
     }
 
