@@ -1,0 +1,18 @@
+{
+    "name": "humantech/zoho-recruit-api",
+    "description": "Zoho Recruit API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "João Paulo Cercal",
+            "email": "jpcercal@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Humantech\\Zoho\\Recruit\\Api\\": "src/"}
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
