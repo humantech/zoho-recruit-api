@@ -107,12 +107,12 @@ interface ClientInterface
     public function downloadFile($id, array $additionalParams, $responseFormat);
 
     /**
-     * @param  int    $jobId
-     * @param  array  $candidateIds
+     * @param  int    $id
+     * @param  mixed  $resource
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
      * @return string
      */
-    public function associateJobOpening($jobId, array $candidateIds, array $additionalParams, $responseFormat);
+    public function uploadPhoto($id, $resource, array $additionalParams, $responseFormat);
 }
