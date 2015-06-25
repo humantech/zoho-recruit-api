@@ -153,4 +153,15 @@ interface ClientInterface
      * @return array
      */
     public function getAssociatedCandidates($jobId, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  string $module
+     * @param  string $selectColumns
+     * @param  mixed  $searchCondition
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getSearchRecords($module, $selectColumns, $searchCondition, array $additionalParams, $responseFormat);
 }
