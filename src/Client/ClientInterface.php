@@ -124,4 +124,14 @@ interface ClientInterface
      * @return mixed
      */
     public function downloadPhoto($id, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  mixed  $documentData
+     * @param  string $fileName
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return mixed
+     */
+    public function uploadDocument($documentData, $fileName, array $additionalParams, $responseFormat);
 }
