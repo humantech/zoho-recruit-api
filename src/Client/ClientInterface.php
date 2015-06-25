@@ -142,4 +142,13 @@ interface ClientInterface
      * @return array
      */
     public function getModules(array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $jobId
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getAssociatedCandidates($jobId, array $additionalParams, $responseFormat);
 }
