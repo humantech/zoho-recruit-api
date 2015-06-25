@@ -115,4 +115,13 @@ interface ClientInterface
      * @return string
      */
     public function uploadPhoto($id, $resource, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $id
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return mixed
+     */
+    public function downloadPhoto($id, array $additionalParams, $responseFormat);
 }
