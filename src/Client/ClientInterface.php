@@ -66,4 +66,14 @@ interface ClientInterface
      * @return array
      */
     public function getRelatedRecords($parentModule, $id, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  string $module
+     * @param  array  $data
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getFields($module, $data, array $additionalParams, $responseFormat);
 }
