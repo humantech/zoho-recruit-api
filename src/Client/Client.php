@@ -37,9 +37,15 @@ class Client extends AbstractClient implements ClientInterface
      * @param  array  $requestParameters
      *
      * @return Response
+     *
+     * @throws \InvalidArgumentException
      */
     protected function callApi($httpMethod, $module, $method, $responseFormat, array $requestParameters)
     {
+        if (!$this->hasMethod($method)) {
+            throw new \InvalidArgumentException(sprintf('The method %s is not registered', $method));
+        }
+
         if (!isset($requestParameters['scope'])) {
             $requestParameters['scope'] = self::API_DEFAULT_SCOPE;
         }
@@ -57,6 +63,35 @@ class Client extends AbstractClient implements ClientInterface
         );
 
         return $this->sendRequest($httpMethod, $uri);
+    }
+
+    /**
+     * @param string $method
+     *
+     * @return bool
+     */
+    protected function hasMethod($method)
+    {
+        return in_array($method, array(
+            'getRecords',
+            'getRecordById',
+            'addRecords',
+            'updateRecords',
+            'getNoteTypes',
+            'getRelatedRecords',
+            'getFields',
+            'getAssociatedJobOpenings',
+            'changeStatus',
+            'uploadFile',
+            'downloadFile',
+            'associateJobOpening',
+            'uploadPhoto',
+            'downloadPhoto',
+            'uploadDocument',
+            'getModules',
+            'getAssociatedCandidates',
+            'getSearchRecords',
+        ));
     }
 
     /**
