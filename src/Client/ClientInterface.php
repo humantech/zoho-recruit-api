@@ -107,6 +107,7 @@ interface ClientInterface
     public function downloadFile($id, array $additionalParams, $responseFormat);
 
     /**
+     * @param  string $module
      * @param  int    $id
      * @param  mixed  $resource
      * @param  array  $additionalParams
@@ -114,16 +115,17 @@ interface ClientInterface
      *
      * @return string
      */
-    public function uploadPhoto($id, $resource, array $additionalParams, $responseFormat);
+    public function uploadPhoto($module, $id, $resource, array $additionalParams, $responseFormat);
 
     /**
+     * @param  string $module
      * @param  int    $id
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
      * @return mixed
      */
-    public function downloadPhoto($id, array $additionalParams, $responseFormat);
+    public function downloadPhoto($module, $id, array $additionalParams, $responseFormat);
 
     /**
      * @param  mixed  $documentData
