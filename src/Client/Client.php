@@ -236,4 +236,24 @@ class Client extends AbstractClient implements ClientInterface
 
         return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function updateRecords($module, $id, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $formatter = new XmlRequestDataFormatter();
+
+        $formatter = $formatter->formatter(array(
+            'module' => $module,
+            'data'   => $data,
+        ));
+
+        $additionalParams['id']      = $id;
+        $additionalParams['xmlData'] = $formatter->getOutput();
+
+        $response = $this->callApi('POST', $module, 'updateRecords', $responseFormat, $additionalParams);
+
+        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+    }
 }
