@@ -66,7 +66,22 @@ class Client extends AbstractClient implements ClientInterface
             $this->getAuthToken()
         );
 
+        $uri .= $this->generateQueryStringByRequestParams($requestParameters);
+
         return $this->sendRequest($httpMethod, $uri);
+    }
+
+    /**
+     * @param  array $requestParameters
+     *
+     * @return string
+     */
+    protected function generateQueryStringByRequestParams(array $requestParameters)
+    {
+        return empty($requestParameters)
+            ? ''
+            : '&' . http_build_query($requestParameters)
+        ;
     }
 
     /**
