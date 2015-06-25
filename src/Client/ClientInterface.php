@@ -134,4 +134,12 @@ interface ClientInterface
      * @return mixed
      */
     public function uploadDocument($documentData, $fileName, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getModules(array $additionalParams, $responseFormat);
 }
