@@ -13,4 +13,25 @@ class Client extends AbstractClient implements ClientInterface
     const API_RESPONSE_FORMAT_JSON = 'json';
 
     const API_RESPONSE_FORMAT_XML = 'xml';
+
+    /**
+     * @var string
+     */
+    protected $authToken;
+
+    /**
+     * @param string $authToken
+     */
+    public function __construct($authToken)
+    {
+        $this->authToken = $authToken;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthToken()
+    {
+        return $this->authToken;
+    }
 }
