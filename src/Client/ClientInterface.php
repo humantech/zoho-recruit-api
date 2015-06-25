@@ -85,4 +85,15 @@ interface ClientInterface
      * @return string
      */
     public function changeStatus(array $candidateIds, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $id
+     * @param  mixed  $resource
+     * @param  string $type
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return string
+     */
+    public function uploadFile($id, $resource, $type, array $additionalParams, $responseFormat);
 }
