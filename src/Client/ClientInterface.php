@@ -56,4 +56,14 @@ interface ClientInterface
      * @return array
      */
     public function getNoteTypes(array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $parentModule
+     * @param  array  $id
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getRelatedRecords($parentModule, $id, array $additionalParams, $responseFormat);
 }
