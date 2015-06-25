@@ -37,4 +37,15 @@ interface ClientInterface
      * @return string
      */
     public function addRecords($module, $data, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  string $module
+     * @param  int    $id
+     * @param  array  $data
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return string
+     */
+    public function updateRecords($module, $id, $data, array $additionalParams, $responseFormat);
 }
