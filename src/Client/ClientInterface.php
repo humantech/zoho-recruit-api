@@ -59,7 +59,7 @@ interface ClientInterface
 
     /**
      * @param  int    $parentModule
-     * @param  array  $id
+     * @param  int    $id
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
@@ -82,7 +82,7 @@ interface ClientInterface
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
-     * @return array
+     * @return string
      */
     public function changeStatus(array $candidateIds, array $additionalParams, $responseFormat);
 }
