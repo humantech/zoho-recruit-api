@@ -31,10 +31,10 @@ class GenericResponseItemFormatter implements FormatterInterface
             return $this;
         }
 
-        if (in_array($data[$keyValue], array('false', 'true'))) {
+        if (in_array(strtolower($data[$keyValue]), array('false', 'true'))) {
             $this->data = array(
                 $keyName  => $data[$keyName],
-                $keyValue => $data[$keyValue] === 'false' ? false : true,
+                $keyValue => strtolower($data[$keyValue]) === 'false' ? false : true,
             );
 
             return $this;

@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
 
-$token = '38ade779b41074f96c13c829a4db1ce5';
+$token = '865d4a0cd590f9ec440520bfe30ff1f6';
 
 $client = new \Humantech\Zoho\Recruit\Api\Client\Client($token);
 
@@ -236,10 +236,10 @@ $testGetSearchRecords = function () use ($client) {
 //$testClientGetNoteTypes();
 //$testClientGetRelatedRecords();
 //$testClientGetFields();
-//$testClientChangeStatus();
+$testClientChangeStatus();
 //$testUploadFile();
 //$testDownloadFile();
-$testAssociateJobopening();
+//$testAssociateJobopening();
 //$testUploadPhoto();
 //$testDownloadPhoto();
 //$testUploadDocument();

@@ -43,7 +43,7 @@ abstract class AbstractFormatter implements FormatterInterface
      * @param string $module
      * @param string $method
      *
-     * @return RequestFormatter
+     * @return AbstractFormatter
      */
     public static function create($module, $method)
     {
@@ -84,6 +84,18 @@ abstract class AbstractFormatter implements FormatterInterface
     protected function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * @param FormatterInterface $formatter
+     *
+     * @return AbstractFormatter
+     */
+    protected function setFormatter(FormatterInterface $formatter)
+    {
+        $this->formatter = $formatter;
+
+        return $this;
     }
 
     /**

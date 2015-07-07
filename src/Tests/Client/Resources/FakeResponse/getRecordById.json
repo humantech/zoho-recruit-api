@@ -1,0 +1,134 @@
+{
+    "response": {
+        "result": {
+            "JobOpenings": {
+                "row": {
+                    "no": "1",
+                    "FL": [
+                        {
+                            "content": "307870000000096001",
+                            "val": "JOBOPENINGID"
+                        },
+                        {
+                            "content": "ZR_2_JOB",
+                            "val": "Job Opening ID"
+                        },
+                        {
+                            "content": "307870000000086003",
+                            "val": "SMOWNERID"
+                        },
+                        {
+                            "content": "Celso Ricardo",
+                            "val": "Account Manager"
+                        },
+                        {
+                            "content": "Full time",
+                            "val": "Job Type"
+                        },
+                        {
+                            "content": "false",
+                            "val": "Is Hot Job Opening"
+                        },
+                        {
+                            "content": "false",
+                            "val": "Publish"
+                        },
+                        {
+                            "content": "1",
+                            "val": "No of Candidates Associated"
+                        },
+                        {
+                            "content": "Teste de vaga",
+                            "val": "Posting Title"
+                        },
+                        {
+                            "content": "2015-06-24 11:02:23",
+                            "val": "Last Activity Time"
+                        },
+                        {
+                            "content": "In-progress",
+                            "val": "Job Opening Status"
+                        },
+                        {
+                            "content": "2015-06-24",
+                            "val": "Date Opened"
+                        },
+                        {
+                            "content": "307870000000086014",
+                            "val": "CLIENTID"
+                        },
+                        {
+                            "content": "Nome do Cliente Atualizado via API",
+                            "val": "Client Name"
+                        },
+                        {
+                            "content": "307870000000086003",
+                            "val": "RECRUITERID"
+                        },
+                        {
+                            "content": "Celso Ricardo",
+                            "val": "Assigned Recruiter"
+                        },
+                        {
+                            "content": "1",
+                            "val": "Number of Positions"
+                        },
+                        {
+                            "content": "307870000000086003",
+                            "val": "SMCREATORID"
+                        },
+                        {
+                            "content": "Celso Ricardo",
+                            "val": "Created By"
+                        },
+                        {
+                            "content": "307870000000086003",
+                            "val": "MODIFIEDBY"
+                        },
+                        {
+                            "content": "Celso Ricardo",
+                            "val": "Modified By"
+                        },
+                        {
+                            "content": "2015-06-24 11:02:23",
+                            "val": "Created Time"
+                        },
+                        {
+                            "content": "2015-06-24 11:02:23",
+                            "val": "Modified Time"
+                        },
+                        {
+                            "content": "0",
+                            "val": "Rate"
+                        },
+                        {
+                            "content": "Yet to Start",
+                            "val": "Stage"
+                        },
+                        {
+                            "content": "0",
+                            "val": "Probability"
+                        },
+                        {
+                            "content": "0",
+                            "val": "Expected Revenue"
+                        },
+                        {
+                            "content": "<br>",
+                            "val": "Job Description"
+                        },
+                        {
+                            "content": "false",
+                            "val": "Is Attachment Present"
+                        },
+                        {
+                            "content": "false",
+                            "val": "Is Locked"
+                        }
+                    ]
+                }
+            }
+        },
+        "uri": "/recruit/private/json/JobOpenings/getRecordById"
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "response": {
+        "result": {
+            "Attachments": {
+                "row": [
+                    {
+                        "no": "1",
+                        "FL": [
+                            {
+                                "content": "307870000000106015",
+                                "val": "id"
+                            },
+                            {
+                                "content": "tiobe.png",
+                                "val": "File Name"
+                            },
+                            {
+                                "content": "54.05 KB",
+                                "val": "Size"
+                            },
+                            {
+                                "content": "2015-07-02 11:13:12",
+                                "val": "Modified Time"
+                            },
+                            {
+                                "content": "307870000000086003",
+                                "val": "SMOWNERID"
+                            },
+                            {
+                                "content": "Celso Ricardo",
+                                "val": "Attached By"
+                            },
+                            {
+                                "content": "Others",
+                                "val": "Category"
+                            }
+                        ]
+                    },
+                    {
+                        "no": "2",
+                        "FL": [
+                            {
+                                "content": "307870000000105011",
+                                "val": "id"
+                            },
+                            {
+                                "content": "MyDocument.docx",
+                                "val": "File Name"
+                            },
+                            {
+                                "content": "6.91 KB",
+                                "val": "Size"
+                            },
+                            {
+                                "content": "2015-07-02 11:11:59",
+                                "val": "Modified Time"
+                            },
+                            {
+                                "content": "307870000000086003",
+                                "val": "SMOWNERID"
+                            },
+                            {
+                                "content": "Celso Ricardo",
+                                "val": "Attached By"
+                            },
+                            {
+                                "content": "Resume",
+                                "val": "Category"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Attachments/getRelatedRecords"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "response": {
+        "result": {
+            "message": "Record(s) added successfully",
+            "recorddetail": {
+                "FL": [
+                    {
+                        "content": "307870000000111001",
+                        "val": "Id"
+                    },
+                    {
+                        "content": "2015-07-07 15:26:36",
+                        "val": "Created Time"
+                    },
+                    {
+                        "content": "2015-07-07 15:26:36",
+                        "val": "Modified Time"
+                    },
+                    {
+                        "content": "Ricardo",
+                        "val": "Created By"
+                    },
+                    {
+                        "content": "Ricardo",
+                        "val": "Modified By"
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Clients/addRecords"
+    }
+}

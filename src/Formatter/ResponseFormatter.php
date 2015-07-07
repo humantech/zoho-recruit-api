@@ -19,15 +19,15 @@ class ResponseFormatter extends AbstractFormatter implements FormatterInterface
         $this->originalData = $data;
 
         if (isset($data['response']['nodata'])) {
-            $this->formatter = new NoDataResponseFormatter();
+            $this->setFormatter(new NoDataResponseFormatter());
         } elseif (isset($data['response']['result']['message']) || isset($data['response']['success']['message'])) {
-            $this->formatter = new MessageResponseFormatter();
+            $this->setFormatter(new MessageResponseFormatter());
         } elseif (isset($data['response']['error'])) {
-            $this->formatter = new ErrorResponseFormatter();
+            $this->setFormatter(new ErrorResponseFormatter());
         } elseif ($this->isMethod('getFields')) {
-            $this->formatter = new GetFieldsResponseFormatter();
+            $this->setFormatter(new GetFieldsResponseFormatter());
         } elseif ($this->isMethod('getModules')) {
-            $this->formatter = new GetModulesResponseFormatter();
+            $this->setFormatter(new GetModulesResponseFormatter());
         } elseif (in_array($this->getMethod(), array(
             'getRecords',
             'getRecordById',
@@ -36,10 +36,10 @@ class ResponseFormatter extends AbstractFormatter implements FormatterInterface
             'getAssociatedCandidates',
             'getSearchRecords',
         ))) {
-            $this->formatter = new GenericResponseFormatter();
+            $this->setFormatter(new GenericResponseFormatter());
         }
 
-        if ($this->formatter instanceof FormatterInterface) {
+        if ($this->getFormatter() instanceof FormatterInterface) {
             $this->getFormatter()->formatter(array(
                 'module' => $this->getModule(),
                 'method' => $this->getMethod(),

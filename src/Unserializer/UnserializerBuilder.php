@@ -26,7 +26,7 @@ class UnserializerBuilder implements UnserializerInterface
      */
     private function getUnserializerByResponseFormat($responseFormat)
     {
-        switch (strtolower($responseFormat)) {
+        switch (strtolower(trim($responseFormat))) {
             case 'json':
                 return new JsonUnserializer();
                 break;

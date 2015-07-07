@@ -1,0 +1,271 @@
+{
+    "Clients": {
+        "section": [
+            {
+                "dv": "Cliente Informações",
+                "name": "Account Information",
+                "FL": [
+                    {
+                        "dv": "Cliente Nome",
+                        "maxlength": "200",
+                        "isreadonly": "false",
+                        "label": "Client Name",
+                        "type": "Text",
+                        "req": "true",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Origem Cliente",
+                        "maxlength": "100",
+                        "isreadonly": "false",
+                        "label": "Parent Client",
+                        "type": "Lookup",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Número para contato",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Contact Number",
+                        "type": "Phone",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Fax",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Fax",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Site",
+                        "maxlength": "255",
+                        "isreadonly": "false",
+                        "label": "Website",
+                        "type": "Website",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Gerenciador de contas",
+                        "maxlength": "120",
+                        "isreadonly": "false",
+                        "label": "Account Manager",
+                        "type": "Lookup",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "val": [
+                            "-None-",
+                            "Communications",
+                            "Technology",
+                            "Government/Military",
+                            "Manufacturing",
+                            "Financial Services",
+                            "IT Services",
+                            "Education",
+                            "Pharma",
+                            "Real Estate",
+                            "Consulting",
+                            "Health Care"
+                        ],
+                        "dv": "Indústria",
+                        "maxlength": "120",
+                        "isreadonly": "false",
+                        "label": "Industry",
+                        "type": "Picklist",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Sobre",
+                        "maxlength": "32000",
+                        "isreadonly": "false",
+                        "label": "About",
+                        "type": "TextArea",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "val": [
+                            "-None-",
+                            {
+                                "content": "Added by User",
+                                "default": "true"
+                            },
+                            "API",
+                            "Import",
+                            "Internal",
+                            "Imported from Zoho CRM"
+                        ],
+                        "dv": "Fonte",
+                        "maxlength": "120",
+                        "isreadonly": "false",
+                        "label": "Source",
+                        "type": "Picklist",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Criado Por",
+                        "maxlength": "25",
+                        "isreadonly": "false",
+                        "label": "Created By",
+                        "type": "OwnerLookup",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Modificado Por",
+                        "maxlength": "25",
+                        "isreadonly": "false",
+                        "label": "Modified By",
+                        "type": "OwnerLookup",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Hora da última atividade",
+                        "maxlength": "25",
+                        "isreadonly": "false",
+                        "label": "Last Activity Time",
+                        "type": "DateTime",
+                        "req": "false",
+                        "customfield": "false"
+                    }
+                ]
+            },
+            {
+                "dv": "Informações de Endereço",
+                "name": "Address Information",
+                "FL": [
+                    {
+                        "dv": "Rua de Cobrança",
+                        "maxlength": "250",
+                        "isreadonly": "false",
+                        "label": "Billing Street",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Rua de Entrega",
+                        "maxlength": "250",
+                        "isreadonly": "false",
+                        "label": "Shipping Street",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Cidade de Cobrança",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Billing City",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Cidade de Entrega",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Shipping City",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Estado de Cobrança",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Billing State",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Estado de Entrega",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Shipping State",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "CEP de Cobrança",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Billing Code",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "CEP de Entrega",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Shipping Code",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "País de Cobrança",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Billing Country",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "País de Entrega",
+                        "maxlength": "30",
+                        "isreadonly": "false",
+                        "label": "Shipping Country",
+                        "type": "Text",
+                        "req": "false",
+                        "customfield": "false"
+                    }
+                ]
+            },
+            {
+                "dv": "Attachment Information",
+                "name": "Attachment Information",
+                "FL": [
+                    {
+                        "dv": "Client Contract",
+                        "maxlength": "250",
+                        "label": "Client Contract",
+                        "type": "UploadText",
+                        "req": "false",
+                        "customfield": "false"
+                    },
+                    {
+                        "dv": "Client Logo",
+                        "maxlength": "250",
+                        "label": "Client Logo",
+                        "type": "UploadText",
+                        "req": "false",
+                        "customfield": "true"
+                    },
+                    {
+                        "dv": "Others",
+                        "maxlength": "250",
+                        "label": "Others",
+                        "type": "UploadText",
+                        "req": "false",
+                        "customfield": "true"
+                    }
+                ]
+            }
+        ]
+    }
+}

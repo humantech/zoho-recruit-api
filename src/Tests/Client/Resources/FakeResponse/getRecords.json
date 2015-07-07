@@ -1,0 +1,49 @@
+{
+    "response": {
+        "result": {
+            "JobOpenings": {
+                "row": [
+                    {
+                        "no": "1",
+                        "FL": [
+                            {
+                                "content": "307870000000096001",
+                                "val": "JOBOPENINGID"
+                            },
+                            {
+                                "content": "Teste de vaga",
+                                "val": "Posting Title"
+                            },
+                            {
+                                "content": "<br>",
+                                "val": "Job Description"
+                            }
+                        ]
+                    },
+                    {
+                        "no": "2",
+                        "FL": [
+                            {
+                                "content": "307870000000086155",
+                                "val": "JOBOPENINGID"
+                            },
+                            {
+                                "content": "Representante Comercial",
+                                "val": "Posting Title"
+                            },
+                            {
+                                "content": "R$ 5.000,00",
+                                "val": "Salary"
+                            },
+                            {
+                                "content": "Teste de descrição da vaga.",
+                                "val": "Job Description"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/JobOpenings/getRecords"
+    }
+}

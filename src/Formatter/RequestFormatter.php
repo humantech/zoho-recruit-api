@@ -14,7 +14,7 @@ class RequestFormatter extends AbstractFormatter implements FormatterInterface
         $this->originalData = $data;
 
         if (in_array($this->method, array('addRecords', 'updateRecords'))) {
-            $this->formatter = new XmlDataRequestFormatter();
+            $this->setFormatter(new XmlDataRequestFormatter());
 
             $this->getFormatter()->formatter(array(
                 'module' => $this->getModule(),

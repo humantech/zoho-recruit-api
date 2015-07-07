@@ -1,0 +1,79 @@
+{
+    "response": {
+        "result": {
+            "Notes": {
+                "row": [
+                    {
+                        "no": "1",
+                        "FL": [
+                            {
+                                "content": "Call",
+                                "val": "Note Type"
+                            },
+                            {
+                                "content": "307870000000072355",
+                                "val": "Note Id"
+                            },
+                            {
+                                "content": "true",
+                                "val": "Is System"
+                            }
+                        ]
+                    },
+                    {
+                        "no": "2",
+                        "FL": [
+                            {
+                                "content": "Meeting",
+                                "val": "Note Type"
+                            },
+                            {
+                                "content": "307870000000072357",
+                                "val": "Note Id"
+                            },
+                            {
+                                "content": "true",
+                                "val": "Is System"
+                            }
+                        ]
+                    },
+                    {
+                        "no": "3",
+                        "FL": [
+                            {
+                                "content": "Notes",
+                                "val": "Note Type"
+                            },
+                            {
+                                "content": "307870000000072353",
+                                "val": "Note Id"
+                            },
+                            {
+                                "content": "true",
+                                "val": "Is System"
+                            }
+                        ]
+                    },
+                    {
+                        "no": "4",
+                        "FL": [
+                            {
+                                "content": "Others",
+                                "val": "Note Type"
+                            },
+                            {
+                                "content": "307870000000072359",
+                                "val": "Note Id"
+                            },
+                            {
+                                "content": "true",
+                                "val": "Is System"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Notes/getNoteTypes"
+    }
+}
