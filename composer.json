@@ -20,5 +20,9 @@
         "fabpot/php-cs-fixer": "^1.9",
         "phpunit/phpunit": "^4.7"
     },
+    "scripts": {
+        "post-install-cmd": [
+            "./bin/composer/scripts/post-install-cmd"
+        ]
     }
 }
