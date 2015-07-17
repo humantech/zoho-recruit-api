@@ -78,6 +78,15 @@ interface ClientInterface
     public function getFields($module, array $additionalParams, $responseFormat);
 
     /**
+     * @param  string $candidateId
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return array
+     */
+    public function getAssociatedJobOpenings($candidateId, array $additionalParams, $responseFormat);
+
+    /**
      * @param  array  $candidateIds
      * @param  string $candidateStatus
      * @param  array  $additionalParams
