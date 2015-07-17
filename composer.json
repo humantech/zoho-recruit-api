@@ -15,5 +15,10 @@
     "require": {
         "php": "~5.5",
         "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "^1.9",
+        "phpunit/phpunit": "^4.7"
+    },
     }
 }
