@@ -32,9 +32,7 @@ class ClientTest extends ClientTestCase
 
     public function testGetAuthToken()
     {
-        $client = new Client('fake_token');
-
-        $this->assertEquals('fake_token', $client->getAuthToken());
+        $this->assertEquals('fake_token', $this->getClientOriginalInstance()->getAuthToken());
     }
 
     public function dataProviderGetUri()
@@ -123,12 +121,18 @@ class ClientTest extends ClientTestCase
      */
     public function testGetUri($module, $method, $format, $params)
     {
-        $client = new Client('fake_token');
+        $client = $this->getClientOriginalInstance();
 
-        $this->assertContains(
-            sprintf(Client::API_BASE_URL, $format, $module, $method, 'fake_token'),
-            $this->invokeMethod($client, 'getUri', array($module, $method, $format, $params))
-        );
+        $result = $this->invokeMethod($client, 'getUri', array(
+            $module,
+            $method,
+            $format,
+            $params
+        ));
+
+        $expectedResult = sprintf(Client::API_BASE_URL, $format, $module, $method, 'fake_token');
+
+        $this->assertContains($expectedResult, $result);
     }
 
     /**
@@ -136,9 +140,12 @@ class ClientTest extends ClientTestCase
      */
     public function testGetUriNotHasMethod()
     {
-        $client = new Client('fake_token');
-
-        $this->invokeMethod($client, 'getUri', array('fake_module', 'fake_method', 'json', array()));
+        $this->invokeMethod($this->getClientOriginalInstance(), 'getUri', array(
+            'fake_module',
+            'fake_method',
+            'json',
+            array()
+        ));
     }
 
     /**
@@ -146,25 +153,32 @@ class ClientTest extends ClientTestCase
      */
     public function testGetUriNotHasResponseFormat()
     {
-        $client = new Client('fake_token');
-
         $methods = $this->getMethodsAllowed();
 
-        $this->invokeMethod($client, 'getUri', array('fake_module', $methods[0], 'fake_response_format', array()));
+        $this->invokeMethod($this->getClientOriginalInstance(), 'getUri', array(
+            'fake_module',
+            $methods[0],
+            'fake_response_format',
+            array()
+        ));
     }
 
     public function testGenerateQueryStringByRequestParamsEmpty()
     {
-        $client = new Client('fake_token');
+        $method = 'generateQueryStringByRequestParams';
 
-        $this->assertEmpty($this->invokeMethod($client, 'generateQueryStringByRequestParams', array(array())));
+        $expectedResult = $this->invokeMethod($this->getClientOriginalInstance(),  $method, array(
+            array()
+        ));
+
+        $this->assertEmpty($expectedResult);
     }
 
     public function testGenerateQueryStringByRequestParams()
     {
-        $client = new Client('fake_token');
+        $method = 'generateQueryStringByRequestParams';
 
-        $queryString = $this->invokeMethod($client, 'generateQueryStringByRequestParams', array(array(
+        $queryString = $this->invokeMethod($this->getClientOriginalInstance(), $method, array(array(
             'key'  => 'value',
             'fake' => 'fakeValue',
         )));
@@ -177,9 +191,11 @@ class ClientTest extends ClientTestCase
      */
     public function testHasMethod($method)
     {
-        $client = new Client('fake_token');
+        $expectedResult = $this->invokeMethod($this->getClientOriginalInstance(), 'hasMethod', array(
+            $method
+        ));
 
-        $this->assertTrue($this->invokeMethod($client, 'hasMethod', array($method)));
+        $this->assertTrue($expectedResult);
     }
 
     /**
@@ -187,34 +203,33 @@ class ClientTest extends ClientTestCase
      */
     public function testHasResponseFormat($requestFormat)
     {
-        $client = new Client('fake_token');
+        $expectedResult = $this->invokeMethod($this->getClientOriginalInstance(), 'hasResponseFormat', array(
+            $requestFormat
+        ));
 
-        $this->assertTrue($this->invokeMethod($client, 'hasResponseFormat', array($requestFormat)));
+        $this->assertTrue($expectedResult);
     }
 
     public function testGetUnserializedData()
     {
-        $client = new Client('fake_token');
-
         $response = new Response(200, array(), json_encode(array(
             'key'  => 'value',
             'fake' => 'fakeValue',
         )));
 
-        $unserializedData = $this->invokeMethod($client, 'getUnserializedData', array($response, 'json'));
+        $expectedResult = $this->invokeMethod($this->getClientOriginalInstance(), 'getUnserializedData', array(
+            $response,
+            'json'
+        ));
 
-        $this->assertEquals('value', $unserializedData['key']);
+        $this->assertEquals('value', $expectedResult['key']);
 
-        $this->assertEquals('fakeValue', $unserializedData['fake']);
+        $this->assertEquals('fakeValue', $expectedResult['fake']);
     }
 
     public function testGetRecords()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -231,11 +246,7 @@ class ClientTest extends ClientTestCase
 
     public function testGetRecordById()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -253,11 +264,7 @@ class ClientTest extends ClientTestCase
 
     public function testAddRecords()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -275,11 +282,7 @@ class ClientTest extends ClientTestCase
 
     public function testUpdateRecords()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -298,11 +301,7 @@ class ClientTest extends ClientTestCase
 
     public function testGetNoteTypes()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -317,11 +316,7 @@ class ClientTest extends ClientTestCase
 
     public function testGetRelatedRecords()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -340,11 +335,7 @@ class ClientTest extends ClientTestCase
 
     public function testGetFields()
     {
-        $client = $this->getMockBuilder('\\Humantech\\Zoho\\Recruit\\Api\\Client\\Client')
-            ->disableOriginalConstructor()
-            ->setMethods(array('sendRequest'))
-            ->getMock()
-        ;
+        $client = $this->getClientMock(array('sendRequest'));
 
         $client
             ->expects($this->once())
@@ -357,5 +348,328 @@ class ClientTest extends ClientTestCase
         ));
 
         $this->assertEquals('Text', $result[0]['FL'][0]['type']);
+    }
+
+    public function testGetAssociatedJobOpenings()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('getAssociatedJobOpenings.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'getAssociatedJobOpenings', array(
+            'fake_candidate_id'
+        ));
+
+        $this->assertEquals('Associated', $result[0]['STATUS']);
+    }
+
+    public function dataProviderChangeStatus()
+    {
+        return array(
+            array('New'),
+            array('Waiting-for-Evaluation'),
+            array('Qualified'),
+            array('Unqualified'),
+            array('Junk candidate'),
+            array('Contacted'),
+            array('Contact in Future'),
+            array('Not Contacted'),
+            array('Attempted to Contact'),
+            array('Associated'),
+            array('Submitted-to-client'),
+            array('Approved by client'),
+            array('Rejected by client'),
+            array('Interview-to-be-Scheduled'),
+            array('Interview-Scheduled'),
+            array('Rejected-for-Interview'),
+            array('Interview-in-Progress'),
+            array('On-Hold'),
+            array('Hired'),
+            array('Rejected'),
+            array('Rejected-Hirable'),
+            array('To-be-Offered'),
+            array('Offer-Accepted'),
+            array('Offer-Made'),
+            array('Offer-Declined'),
+            array('Offer-Withdrawn'),
+            array('Joined'),
+            array('No-Show'),
+        );
+    }
+
+    /**
+     * @dataProvider dataProviderChangeStatus
+     */
+    public function testChangeStatus($status)
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('changeStatus.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'changeStatus', array(
+            array('fake_id_1', 'fake_id_2', 'fake_id_n'),
+            $status
+        ));
+
+        $this->assertEquals('Candidate(s) status changed successfully', $result);
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     *
+     * @dataProvider dataProviderChangeStatus
+     */
+    public function testChangeStatusHttpApiException($status)
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $this->invokeMethod($client, 'changeStatus', array(
+            array('fake_id_1', 'fake_id_2', 'fake_id_n'),
+            strtolower($status)
+        ));
+    }
+
+    public function dataProviderUploadFile()
+    {
+        return array(
+            array('Resume'),
+            array('Others'),
+        );
+    }
+
+    /**
+     * @dataProvider dataProviderUploadFile
+     */
+    public function testUploadFile($type)
+    {
+        $client = $this->getClientMock(array('sendFile'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendFile')
+            ->willReturn($this->getResourceFakeResponseByName('uploadFile.json'))
+        ;
+
+        $result = $this->invokeMethod($client, 'uploadFile', array(
+            'fake_id',
+            $type,
+            'fake_resource'
+        ));
+
+        $this->assertEquals('File has been attached successfully', $result);
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     *
+     * @dataProvider dataProviderUploadFile
+     */
+    public function testUploadFileHttpApiException($type)
+    {
+        $client = $this->getClientMock(array('sendFile'));
+
+        $this->invokeMethod($client, 'uploadFile', array(
+            'fake_id',
+            strtolower($type),
+            'fake_resource'
+        ));
+    }
+
+    public function testDownloadFile()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), 'fake_binary'))
+        ;
+
+        $result = $this->invokeMethod($client, 'downloadFile', array(
+            'fake_id',
+            'fake_save_to_filename'
+        ));
+
+        $this->assertEquals('Downloaded file with successfully', $result);
+    }
+
+    public function testAssociateJobopening()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('associateJobopening.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'associateJobopening', array(
+            array('fake_id_1', 'fake_id_2', 'fake_id_n'),
+            array('fake_id_1', 'fake_id_2', 'fake_id_n'),
+        ));
+
+        $this->assertEquals('Candidate(s) associated successfully', $result);
+    }
+
+    public function dataProviderUploadPhoto()
+    {
+        return array(
+            array('Candidates'),
+            array('Contacts'),
+        );
+    }
+
+    /**
+     * @dataProvider dataProviderUploadPhoto
+     */
+    public function testUploadPhoto($module)
+    {
+        $client = $this->getClientMock(array('sendFile'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendFile')
+            ->willReturn($this->getResourceFakeResponseByName('uploadPhoto.json'))
+        ;
+
+        $result = $this->invokeMethod($client, 'uploadPhoto', array(
+            $module,
+            'fake_id',
+            'fake_resource'
+        ));
+
+        // Note: the message error (in english) "succuessfully" in the response from ZohoAPI =/
+        $this->assertEquals('Photo uploaded succuessfully', $result);
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     *
+     * @dataProvider dataProviderUploadPhoto
+     */
+    public function testUploadPhotoHttpApiException($module)
+    {
+        $client = $this->getClientMock(array('sendFile'));
+
+        $this->invokeMethod($client, 'uploadPhoto', array(
+            strtolower($module),
+            'fake_id',
+            'fake_resource'
+        ));
+    }
+
+    /**
+     * @dataProvider dataProviderUploadPhoto
+     */
+    public function testDownloadPhoto($module)
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), 'fake_binary'))
+        ;
+
+        $result = $this->invokeMethod($client, 'downloadPhoto', array(
+            $module,
+            'fake_id',
+            'fake_save_to_filename'
+        ));
+
+        $this->assertEquals('Downloaded photo with successfully', $result);
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     *
+     * @dataProvider dataProviderUploadPhoto
+     */
+    public function testDownloadPhotoHttpApiException($module)
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $this->invokeMethod($client, 'downloadPhoto', array(
+            strtolower($module),
+            'fake_id',
+            'fake_save_to_filename'
+        ));
+    }
+
+    public function testUploadDocument()
+    {
+        $client = $this->getClientMock(array('sendFile'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendFile')
+            ->willReturn($this->getResourceFakeResponseByName('uploadDocument.json'))
+        ;
+
+        $result = $this->invokeMethod($client, 'uploadDocument', array(
+            'fake_document_data',
+            'fake_filename'
+        ));
+
+        $this->assertEquals('Candidate updated successfully', $result);
+    }
+
+    public function testGetModules()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('getModules.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'getModules', array());
+
+        $this->assertEquals('Job Openings', $result[0]['JobOpening']);
+    }
+
+    public function testGetAssociatedCandidates()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('getAssociatedCandidates.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'getAssociatedCandidates', array(
+            'fake_job_id'
+        ));
+
+        $this->assertEquals(307870000000100013, $result[0]['CANDIDATEID']);
+    }
+
+    public function testGetSearchRecords()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array(), $this->getResourceFakeResponseByName('getSearchRecords.json')))
+        ;
+
+        $result = $this->invokeMethod($client, 'getSearchRecords', array(
+            'Candidates',
+            'fake_selected_columns',
+            'fake_search_condition'
+        ));
+
+        $this->assertEquals('fake@humantech.com.br', $result[0]['Email']);
     }
 }
