@@ -3,6 +3,8 @@
 namespace Humantech\Zoho\Recruit\Api\Client;
 
 use GuzzleHttp\Psr7\Response;
+use Humantech\Zoho\Recruit\Api\Formatter\RequestFormatter;
+use Humantech\Zoho\Recruit\Api\Formatter\ResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\ResponseListFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\ResponseRowFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\XmlRequestDataFormatter;
@@ -34,17 +36,16 @@ class Client extends AbstractClient implements ClientInterface
     }
 
     /**
-     * @param  string $httpMethod
      * @param  string $module
      * @param  string $method
      * @param  string $responseFormat
      * @param  array  $requestParameters
      *
-     * @return Response
+     * @return string
      *
      * @throws \InvalidArgumentException
      */
-    protected function callApi($httpMethod, $module, $method, $responseFormat, array $requestParameters)
+    protected function getUri($module, $method, $responseFormat, array $requestParameters = array())
     {
         if (!$this->hasMethod($method)) {
             throw new \InvalidArgumentException(sprintf('The method %s is not registered', $method));
@@ -70,9 +71,7 @@ class Client extends AbstractClient implements ClientInterface
             $this->getAuthToken()
         );
 
-        $uri .= $this->generateQueryStringByRequestParams($requestParameters);
-
-        return $this->sendRequest($httpMethod, $uri);
+        return $uri . $this->generateQueryStringByRequestParams($requestParameters);
     }
 
     /**
@@ -128,51 +127,6 @@ class Client extends AbstractClient implements ClientInterface
             'json',
             'xml',
         ));
-    }
-
-    /**
-     * @param  string $module
-     * @param  array  $unserializedData
-     *
-     * @return array
-     *
-     * @throws HttpApiException
-     */
-    protected function getApiResponse($module, $unserializedData)
-    {
-        // As a no data
-        if (!isset($unserializedData['response']['result']) && isset($unserializedData['response']['nodata'])) {
-            return array();
-        }
-
-        // As a error
-        if (isset($unserializedData['response']['error'])) {
-            throw new HttpApiException(
-                trim($unserializedData['response']['error']['message']),
-                (int) trim($unserializedData['response']['error']['code']),
-                trim($unserializedData['response']['uri'])
-            );
-        }
-
-        // As a string
-        if (!isset($unserializedData['response']['result'][$module])) {
-            return trim($unserializedData['response']['result']['message']);
-        }
-
-        // As a single result
-        if (!isset($unserializedData['response']['result'][$module]['row'][0])) {
-
-            $formatter = new ResponseRowFormatter();
-
-            $data = $unserializedData['response']['result'][$module]['row']['FL'];
-
-            return array($formatter->formatter($data)->getOutput());
-        }
-
-        // As a list
-        $formatter = new ResponseListFormatter();
-
-        return $formatter->formatter($unserializedData['response']['result'][$module]['row'])->getOutput();
     }
 
     /**
