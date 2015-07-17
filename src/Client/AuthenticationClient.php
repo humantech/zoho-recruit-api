@@ -2,7 +2,7 @@
 
 namespace Humantech\Zoho\Recruit\Api\Client;
 
-class AuthenticationClient extends AbstractClient
+class AuthenticationClient extends AbstractClient implements AuthenticationClientInterface
 {
     const API_AUTH_URL = 'https://accounts.zoho.com/apiauthtoken/nb/create?SCOPE=%s&EMAIL_ID=%s&PASSWORD=%s';
 
@@ -11,10 +11,8 @@ class AuthenticationClient extends AbstractClient
      * @param  string $password
      *
      * @return string
-     *
-     * @throws AuthenticationClientException
      */
-    public function generateAuthToken($username, $password)
+    protected function getApiResponseAuthToken($username, $password)
     {
         $response = $this->sendRequest('GET', sprintf(
             self::API_AUTH_URL,
@@ -23,7 +21,15 @@ class AuthenticationClient extends AbstractClient
             urlencode($password)
         ));
 
-        $content = $response->getBody()->getContents();
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function generateAuthToken($username, $password)
+    {
+        $content = $this->getApiResponseAuthToken($username, $password);
 
         if (strpos($content, 'RESULT=TRUE') === false) {
             preg_match('/CAUSE\=(\w*)/i', $content, $matches);
