@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+DATE_FORMAT="+%Y-%m-%d %H:%M:%S"
+echo "["$(date "$DATE_FORMAT")"] Running PHPCSFixer ..."
+
+COMMAND_GIT_DIFF="git diff --cached --name-status --diff-filter=ACM"
+COMMAND_PHP_CS_FIXER="./vendor/fabpot/php-cs-fixer/php-cs-fixer fix --dry-run --level=psr2 --verbose"
+
+PHP_FILES_TO_BE_COMMITED=`$COMMAND_GIT_DIFF | grep -E -o '\W+.*?\.php'`
+
+LOOP_ERRORS_COUNT=0
+LOOP_PHP_FILES_WITH_ERRORS=""
+
+for CURRENT_PHP_FILENAME in $PHP_FILES_TO_BE_COMMITED
+do
+    OUTPUT_COMMAND_PHP_CS_FIXER=`$COMMAND_PHP_CS_FIXER $CURRENT_PHP_FILENAME`
+    MATCHES_COUNT=`echo "$OUTPUT_COMMAND_PHP_CS_FIXER" | grep -P -c '^.{3}\d+\)\s{1}'`
+
+    if [ $MATCHES_COUNT -ge 1 ]; then
+        LOOP_ERRORS_COUNT=$(($LOOP_ERRORS_COUNT+1))
+        CURRENT_FILE_ERRORS=`echo "$OUTPUT_COMMAND_PHP_CS_FIXER" | grep -P -o '\d+\)\s{1}.*?\(.*?\)' | grep -P -o '\(.*?\)'`
+        LOOP_PHP_FILES_WITH_ERRORS="$LOOP_PHP_FILES_WITH_ERRORS""   $LOOP_ERRORS_COUNT) ""$CURRENT_PHP_FILENAME"" $CURRENT_FILE_ERRORS"$'\n'
+    fi
+done
+
+if [ $LOOP_ERRORS_COUNT -ge 1 ]; then
+    echo "["$(date "$DATE_FORMAT")"] $LOOP_ERRORS_COUNT PHP file(s) contains Coding Standards (PSR-2) issues (you must fix this files before perform the commit):"
+    echo "$LOOP_PHP_FILES_WITH_ERRORS"
+    exit 1
+fi
