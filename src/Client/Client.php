@@ -262,6 +262,23 @@ class Client extends AbstractClient implements ClientInterface
     /**
      * @inheritdoc
      */
+    public function getAssociatedJobOpenings($candidateId, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'getAssociatedJobOpenings';
+
+        $additionalParams['id'] = $candidateId;
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function changeStatus(array $candidateIds, $candidateStatus, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
         $module = 'Candidates';
@@ -405,8 +422,6 @@ class Client extends AbstractClient implements ClientInterface
         $response = $this->sendFile($this->getUri($module, $method, $responseFormat, $additionalParams), array(
             'content' => $resource
         ));
-
-        print_r($response);
 
         $unserializedData = $this->getUnserializedData(new Response(200, array(), $response), $responseFormat);
 
