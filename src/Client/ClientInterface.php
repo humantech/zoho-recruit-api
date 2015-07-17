@@ -58,53 +58,65 @@ interface ClientInterface
     public function getNoteTypes(array $additionalParams, $responseFormat);
 
     /**
-     * @param  int    $parentModule
+     * @param  string $module
+     * @param  string $parentModule
      * @param  int    $id
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
      * @return array
      */
-    public function getRelatedRecords($parentModule, $id, array $additionalParams, $responseFormat);
+    public function getRelatedRecords($module, $parentModule, $id, array $additionalParams, $responseFormat);
 
     /**
      * @param  string $module
-     * @param  array  $data
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
      * @return array
      */
-    public function getFields($module, $data, array $additionalParams, $responseFormat);
+    public function getFields($module, array $additionalParams, $responseFormat);
 
     /**
+     * @param  array  $candidateIds
+     * @param  string $candidateStatus
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return string
+     */
+    public function changeStatus(array $candidateIds, $candidateStatus, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $id
+     * @param  string $type
+     * @param  mixed  $resource
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return string
+     */
+    public function uploadFile($id, $type, $resource, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  int    $id
+     * @param  string $saveToFile
+     * @param  array  $additionalParams
+     * @param  string $responseFormat
+     *
+     * @return string
+     */
+    public function downloadFile($id, $saveToFile, array $additionalParams, $responseFormat);
+
+    /**
+     * @param  array  $jobIds
      * @param  array  $candidateIds
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
      * @return string
      */
-    public function changeStatus(array $candidateIds, array $additionalParams, $responseFormat);
-
-    /**
-     * @param  int    $id
-     * @param  mixed  $resource
-     * @param  string $type
-     * @param  array  $additionalParams
-     * @param  string $responseFormat
-     *
-     * @return string
-     */
-    public function uploadFile($id, $resource, $type, array $additionalParams, $responseFormat);
-
-    /**
-     * @param  int    $id
-     * @param  array  $additionalParams
-     * @param  string $responseFormat
-     *
-     * @return mixed
-     */
-    public function downloadFile($id, array $additionalParams, $responseFormat);
+    public function associateJobopening(array $jobIds, array $candidateIds, array $additionalParams, $responseFormat);
 
     /**
      * @param  string $module
@@ -120,20 +132,21 @@ interface ClientInterface
     /**
      * @param  string $module
      * @param  int    $id
+     * @param  string $saveToFile
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
-     * @return mixed
+     * @return string
      */
-    public function downloadPhoto($module, $id, array $additionalParams, $responseFormat);
+    public function downloadPhoto($module, $id, $saveToFile, array $additionalParams, $responseFormat);
 
     /**
-     * @param  mixed  $documentData
+     * @param  string $documentData
      * @param  string $fileName
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
-     * @return mixed
+     * @return string
      */
     public function uploadDocument($documentData, $fileName, array $additionalParams, $responseFormat);
 

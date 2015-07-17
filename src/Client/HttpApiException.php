@@ -15,7 +15,7 @@ class HttpApiException extends \RuntimeException
      * @param string     $uri
      * @param \Exception $previous
      */
-    public function __construct($message, $code, $uri, \Exception $previous = null)
+    public function __construct($message, $code = 0, $uri = '', \Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
 

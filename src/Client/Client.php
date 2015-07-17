@@ -155,9 +155,13 @@ class Client extends AbstractClient implements ClientInterface
      */
     public function getRecords($module, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
-        $response = $this->callApi('GET', $module, 'getRecords', $responseFormat, $additionalParams);
+        $method = 'getRecords';
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
     /**
@@ -165,11 +169,15 @@ class Client extends AbstractClient implements ClientInterface
      */
     public function getRecordById($module, $id, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
+        $method = 'getRecordById';
+
         $additionalParams['id'] = $id;
 
-        $response = $this->callApi('GET', $module, 'getRecordById', $responseFormat, $additionalParams);
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
     /**
@@ -177,18 +185,15 @@ class Client extends AbstractClient implements ClientInterface
      */
     public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
-        $formatter = new XmlRequestDataFormatter();
+        $method = 'addRecords';
 
-        $formatter = $formatter->formatter(array(
-            'module' => $module,
-            'data'   => $data,
-        ));
+        $additionalParams['xmlData'] = RequestFormatter::create($module, 'addRecords')->formatter($data)->getOutput();
 
-        $additionalParams['xmlData'] = $formatter->getOutput();
+        $response = $this->sendRequest('POST', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        $response = $this->callApi('POST', $module, 'addRecords', $responseFormat, $additionalParams);
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
     /**
@@ -196,19 +201,16 @@ class Client extends AbstractClient implements ClientInterface
      */
     public function updateRecords($module, $id, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
-        $formatter = new XmlRequestDataFormatter();
-
-        $formatter = $formatter->formatter(array(
-            'module' => $module,
-            'data'   => $data,
-        ));
+        $method = 'updateRecords';
 
         $additionalParams['id']      = $id;
-        $additionalParams['xmlData'] = $formatter->getOutput();
+        $additionalParams['xmlData'] = RequestFormatter::create($module, 'updateRecords')->formatter($data)->getOutput();
 
-        $response = $this->callApi('POST', $module, 'updateRecords', $responseFormat, $additionalParams);
+        $response = $this->sendRequest('POST', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
     /**
@@ -217,24 +219,302 @@ class Client extends AbstractClient implements ClientInterface
     public function getNoteTypes(array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
         $module = 'Notes';
+        $method = 'getNoteTypes';
 
-        $response = $this->callApi('GET', $module, 'getNoteTypes', $responseFormat, $additionalParams);
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
     /**
      * @inheritdoc
      */
-    public function getRelatedRecords($parentModule, $id, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    public function getRelatedRecords($module, $parentModule, $id, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
-        $module = 'Notes';
+        $method = 'getRelatedRecords';
 
         $additionalParams['parentModule'] = $parentModule;
         $additionalParams['id']           = $id;
 
-        $response = $this->callApi('GET', $module, 'getRelatedRecords', $responseFormat, $additionalParams);
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        return $this->getApiResponse($module, $this->getUnserializedData($response, $responseFormat));
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getFields($module, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $method = 'getFields';
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function changeStatus(array $candidateIds, $candidateStatus, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'changeStatus';
+
+        if (!in_array($candidateStatus, array(
+            'New',
+            'Waiting-for-Evaluation',
+            'Qualified',
+            'Unqualified',
+            'Junk candidate',
+            'Contacted',
+            'Contact in Future',
+            'Not Contacted',
+            'Attempted to Contact',
+            'Associated',
+            'Submitted-to-client',
+            'Approved by client',
+            'Rejected by client',
+            'Interview-to-be-Scheduled',
+            'Interview-Scheduled',
+            'Rejected-for-Interview',
+            'Interview-in-Progress',
+            'On-Hold',
+            'Hired',
+            'Rejected',
+            'Rejected-Hirable',
+            'To-be-Offered',
+            'Offer-Accepted',
+            'Offer-Made',
+            'Offer-Declined',
+            'Offer-Withdrawn',
+            'Joined',
+            'No-Show',
+        ))) {
+            throw new HttpApiException(sprintf('The new status "%s" is invalid!', $candidateStatus));
+        }
+
+        $additionalParams['candidateIds']    = implode(',', $candidateIds);
+        $additionalParams['candidateStatus'] = $candidateStatus;
+
+        $response = $this->sendRequest('POST', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function uploadFile($id, $type, $resource, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'uploadFile';
+
+        if (!in_array($type, array(
+            'Resume',
+            'Others',
+        ))) {
+            throw new HttpApiException(sprintf('The type of upload "%s" is invalid!', $type));
+        }
+
+        $additionalParams['id']   = $id;
+        $additionalParams['type'] = $type;
+
+        $response = $this->sendFile($this->getUri($module, $method, $responseFormat, $additionalParams), array(
+            'content' => $resource
+        ));
+
+        $unserializedData = $this->getUnserializedData(new Response(200, array(), $response), $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function downloadFile($id, $saveToFile, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'downloadFile';
+
+        $additionalParams['id'] = $id;
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams), array(), array(
+            'save_to' => $saveToFile
+        ));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        if (is_null($unserializedData)) {
+            $fakeResponse = new Response(200, array(), json_encode(array(
+                'response'        => array(
+                    'result'      => array(
+                        'message' => 'Downloaded file with successfully',
+                    ),
+                ),
+            )));
+
+            $unserializedData = $this->getUnserializedData($fakeResponse, $responseFormat);
+        }
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function associateJobopening(array $jobIds, array $candidateIds, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'associateJobOpening';
+
+        $additionalParams['jobIds']       = implode(',', $jobIds);
+        $additionalParams['candidateIds'] = implode(',', $candidateIds);
+
+        $response = $this->sendRequest('POST', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function uploadPhoto($module, $id, $resource, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $method = 'uploadPhoto';
+
+        if (!in_array($module, array(
+            'Candidates',
+            'Contacts',
+        ))) {
+            throw new HttpApiException(sprintf('The module "%s" is invalid!', $module));
+        }
+
+        $additionalParams['id'] = $id;
+
+        $response = $this->sendFile($this->getUri($module, $method, $responseFormat, $additionalParams), array(
+            'content' => $resource
+        ));
+
+        print_r($response);
+
+        $unserializedData = $this->getUnserializedData(new Response(200, array(), $response), $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function downloadPhoto($module, $id, $saveToFile, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $method = 'downloadPhoto';
+
+        if (!in_array($module, array(
+            'Candidates',
+            'Contacts',
+        ))) {
+            throw new HttpApiException(sprintf('The module "%s" is invalid!', $module));
+        }
+
+        $additionalParams['id'] = $id;
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams), array(), array(
+            'save_to' => $saveToFile
+        ));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        if (is_null($unserializedData)) {
+            $fakeResponse = new Response(200, array(), json_encode(array(
+                'response'        => array(
+                    'result'      => array(
+                        'message' => 'Downloaded photo with successfully',
+                    ),
+                ),
+            )));
+
+            $unserializedData = $this->getUnserializedData($fakeResponse, $responseFormat);
+        }
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function uploadDocument($documentData, $fileName, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Candidates';
+        $method = 'uploadDocument';
+
+        $additionalParams['fileName'] = $fileName;
+
+        $response = $this->sendFile($this->getUri($module, $method, $responseFormat, $additionalParams), array(
+            'documentData' => base64_encode($documentData)
+        ));
+
+        $unserializedData = $this->getUnserializedData(new Response(200, array(), $response), $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getModules(array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'Info';
+        $method = 'getModules';
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAssociatedCandidates($jobId, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $module = 'JobOpenings';
+        $method = 'getAssociatedCandidates';
+
+        $additionalParams['id'] = $jobId;
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSearchRecords($module, $selectColumns, $searchCondition, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    {
+        $method = 'getSearchRecords';
+
+        $additionalParams['selectColumns']   = $selectColumns;
+        $additionalParams['searchCondition'] = $searchCondition;
+
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
+
+        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+
+        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 }
