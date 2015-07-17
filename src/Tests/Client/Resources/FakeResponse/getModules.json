@@ -1,0 +1,81 @@
+{
+    "response": {
+        "result": {
+            "row": [
+                {
+                    "content": "Job Openings",
+                    "sl": "Job Opening",
+                    "id": "307870000000063058",
+                    "no": "1",
+                    "pl": "Job Openings",
+                    "gt": "1"
+                },
+                {
+                    "content": "Candidates",
+                    "sl": "Candidate",
+                    "id": "307870000000063052",
+                    "no": "2",
+                    "pl": "Candidates",
+                    "gt": "1"
+                },
+                {
+                    "content": "Interviews",
+                    "sl": "Interview",
+                    "id": "307870000000063094",
+                    "no": "3",
+                    "pl": "Interviews",
+                    "gt": "1"
+                },
+                {
+                    "content": "Clients",
+                    "sl": "Client",
+                    "id": "307870000000063054",
+                    "no": "4",
+                    "pl": "Clients",
+                    "gt": "1"
+                },
+                {
+                    "content": "Contacts",
+                    "sl": "Contact",
+                    "id": "307870000000063056",
+                    "no": "5",
+                    "pl": "Contacts",
+                    "gt": "1"
+                },
+                {
+                    "content": "ToDo's",
+                    "sl": "ToDo",
+                    "id": "307870000000063080",
+                    "no": "6",
+                    "pl": "ToDo's",
+                    "gt": "1"
+                },
+                {
+                    "content": "Emails",
+                    "sl": "Email",
+                    "id": "307870000000063098",
+                    "no": "7",
+                    "pl": "Emails",
+                    "gt": "1"
+                },
+                {
+                    "content": "Documents",
+                    "sl": "Documents",
+                    "id": "307870000000063090",
+                    "no": "8",
+                    "pl": "Documents",
+                    "gt": "1"
+                },
+                {
+                    "content": "Social",
+                    "sl": "Social",
+                    "id": "307870000000063092",
+                    "no": "9",
+                    "pl": "Social",
+                    "gt": "1"
+                }
+            ]
+        },
+        "uri": "/recruit/private/json/Info/getModules"
+    }
+}

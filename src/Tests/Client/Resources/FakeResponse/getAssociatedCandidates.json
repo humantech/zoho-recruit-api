@@ -1,0 +1,22 @@
+{
+    "response": {
+        "result": {
+            "JobOpenings": {
+                "row": {
+                    "no": "1",
+                    "FL": [
+                        {
+                            "content": "307870000000100013",
+                            "val": "CANDIDATEID"
+                        },
+                        {
+                            "content": "Associated",
+                            "val": "STATUS"
+                        }
+                    ]
+                }
+            }
+        },
+        "uri": "/recruit/private/json/JobOpenings/getAssociatedCandidates"
+    }
+}

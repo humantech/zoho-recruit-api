@@ -1,0 +1,32 @@
+{
+    "response": {
+        "result": {
+            "message": "File has been attached successfully",
+            "recorddetail": {
+                "FL": [
+                    {
+                        "content": "307870000000121004",
+                        "val": "Id"
+                    },
+                    {
+                        "content": "2015-07-15 09:04:11",
+                        "val": "Created Time"
+                    },
+                    {
+                        "content": "2015-07-15 09:04:11",
+                        "val": "Modified Time"
+                    },
+                    {
+                        "content": "Ricardo",
+                        "val": "Created By"
+                    },
+                    {
+                        "content": "Ricardo",
+                        "val": "Modified By"
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Candidates/uploadFile"
+    }
+}

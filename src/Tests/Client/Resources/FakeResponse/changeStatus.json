@@ -1,0 +1,24 @@
+{
+    "response": {
+        "result": {
+            "message": "Candidate(s) status changed successfully",
+            "recorddetail": {
+                "FL": [
+                    {
+                        "content": "null",
+                        "val": "jobId"
+                    },
+                    {
+                        "content": "307870000000100080",
+                        "val": "candidateIds"
+                    },
+                    {
+                        "content": "New",
+                        "val": "candidateStatus"
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Candidates/changeStatus"
+    }
+}

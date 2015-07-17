@@ -1,0 +1,34 @@
+{
+    "response": {
+        "result": {
+            "Candidates": {
+                "row": {
+                    "no": "1",
+                    "FL": [
+                        {
+                            "content": "307870000000100013",
+                            "val": "CANDIDATEID"
+                        },
+                        {
+                            "content": "Azevedo",
+                            "val": "Last Name"
+                        },
+                        {
+                            "content": "fake@humantech.com.br",
+                            "val": "Email"
+                        },
+                        {
+                            "content": "47 88596253",
+                            "val": "Mobile"
+                        },
+                        {
+                            "content": "Humantech",
+                            "val": "Current Employer"
+                        }
+                    ]
+                }
+            }
+        },
+        "uri": "/recruit/private/json/Candidates/getSearchRecords"
+    }
+}

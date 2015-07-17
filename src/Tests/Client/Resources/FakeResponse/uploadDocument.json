@@ -1,0 +1,14 @@
+{
+    "response": {
+        "result": {
+            "message": "Candidate updated successfully",
+            "recorddetail": {
+                "FL": {
+                    "content": "307870000000100080",
+                    "val": "Id"
+                }
+            }
+        },
+        "uri": "/recruit/private/json/Candidates/uploadDocument"
+    }
+}

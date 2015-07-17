@@ -1,0 +1,20 @@
+{
+    "response": {
+        "result": {
+            "message": "Candidate(s) associated successfully",
+            "recorddetail": {
+                "FL": [
+                    {
+                        "content": "307870000000096001",
+                        "val": "jobIds"
+                    },
+                    {
+                        "content": "307870000000100080",
+                        "val": "candidateIds"
+                    }
+                ]
+            }
+        },
+        "uri": "/recruit/private/json/Candidates/associateJobOpening"
+    }
+}

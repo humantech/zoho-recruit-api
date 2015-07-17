@@ -1,0 +1,9 @@
+{
+    "response": {
+        "success": {
+            "message": "Photo uploaded succuessfully",
+            "code": "4800"
+        },
+        "uri": "/recruit/private/json/Candidates/uploadPhoto"
+    }
+}
