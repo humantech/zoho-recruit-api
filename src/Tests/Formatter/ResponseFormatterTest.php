@@ -14,6 +14,7 @@ class ResponseFormatterTest extends TestCase
             array('getRecordById'),
             array('getNoteTypes'),
             array('getRelatedRecords'),
+            array('getAssociatedJobOpenings'),
             array('getAssociatedCandidates'),
             array('getSearchRecords'),
         );
