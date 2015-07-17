@@ -99,6 +99,17 @@ $testClientGetFields = function () use ($client) {
     print_r($client->getFields('JobOpenings'));
 };
 
+$testClientGetAssociatedJobopenings = function () use ($client) {
+
+    $candidateList = $client->getRecords('Candidates', array(
+        'selectColumns' => 'Candidates(CANDIDATEID)'
+    ));
+
+    if (isset($candidateList[0]['CANDIDATEID'])) {
+        print_r($client->getAssociatedJobopenings($candidateList[0]['CANDIDATEID']));
+    }
+};
+
 $testClientChangeStatus = function () use ($client) {
 
     $candidateList = $client->getRecords('Candidates', array(
@@ -236,7 +247,8 @@ $testGetSearchRecords = function () use ($client) {
 //$testClientGetNoteTypes();
 //$testClientGetRelatedRecords();
 //$testClientGetFields();
-$testClientChangeStatus();
+//$testClientGetAssociatedJobopenings();
+//$testClientChangeStatus();
 //$testUploadFile();
 //$testDownloadFile();
 //$testAssociateJobopening();
