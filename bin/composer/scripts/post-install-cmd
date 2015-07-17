@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+BASE_PROJECT_DIR=`pwd`
+rm $BASE_PROJECT_DIR/.git/hooks/pre-commit 2> /dev/null
+ln -s $BASE_PROJECT_DIR/bin/git/hooks/pre-commit $BASE_PROJECT_DIR/.git/hooks/pre-commit
+chmod +x $BASE_PROJECT_DIR/.git/hooks/pre-commit
