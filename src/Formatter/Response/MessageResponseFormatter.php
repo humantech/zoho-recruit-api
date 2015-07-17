@@ -16,10 +16,13 @@ class MessageResponseFormatter implements FormatterInterface
      */
     public function formatter(array $data)
     {
-        $this->data = isset($data['data']['response']['result']['message'])
-            ? trim($data['data']['response']['result']['message'])
-            : trim($data['data']['response']['success']['message'])
-        ;
+        if (isset($data['data']['response']['result']['message'])) {
+            $data = $data['data']['response']['result']['message'];
+        } else {
+            $data = $data['data']['response']['success']['message'];
+        }
+
+        $this->data = trim($data);
     }
 
     /**

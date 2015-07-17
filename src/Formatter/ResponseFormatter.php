@@ -33,6 +33,7 @@ class ResponseFormatter extends AbstractFormatter implements FormatterInterface
             'getRecordById',
             'getNoteTypes',
             'getRelatedRecords',
+            'getAssociatedJobOpenings',
             'getAssociatedCandidates',
             'getSearchRecords',
         ))) {

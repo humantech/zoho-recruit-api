@@ -22,7 +22,7 @@ class GenericResponseItemFormatter implements FormatterInterface
         $data[$keyName]  = trim(str_replace(' ', '', $data[$keyName]));
         $data[$keyValue] = trim($data[$keyValue]);
 
-        if (is_numeric($data[$keyValue])) {
+        if (is_numeric($data[$keyValue]) && strlen($data[$keyValue]) <= 10) {
             $this->data = array(
                 $keyName  => $data[$keyName],
                 $keyValue => strpos($data[$keyValue], '.') === false ? (int) $data[$keyValue] : (float) $data[$keyValue],
