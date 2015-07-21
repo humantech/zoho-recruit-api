@@ -311,7 +311,7 @@ class ClientTest extends ClientTestCase
 
         $result = $this->invokeMethod($client, 'getNoteTypes', array());
 
-        $this->assertEquals('Call', $result[0]['NoteType']);
+        $this->assertEquals('Call', $result[0]['Note Type']);
     }
 
     public function testGetRelatedRecords()
@@ -634,7 +634,7 @@ class ClientTest extends ClientTestCase
 
         $result = $this->invokeMethod($client, 'getModules', array());
 
-        $this->assertEquals('Job Openings', $result[0]['JobOpening']);
+        $this->assertEquals('Job Openings', $result[0]['Job Opening']);
     }
 
     public function testGetAssociatedCandidates()

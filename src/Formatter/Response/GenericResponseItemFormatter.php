@@ -19,7 +19,7 @@ class GenericResponseItemFormatter implements FormatterInterface
         $keyName  = isset($data['val']) ? 'val' : 'sl';
         $keyValue = 'content';
 
-        $data[$keyName]  = trim(str_replace(' ', '', $data[$keyName]));
+        $data[$keyName]  = trim($data[$keyName]);
         $data[$keyValue] = trim($data[$keyValue]);
 
         if (is_numeric($data[$keyValue]) && strlen($data[$keyValue]) <= 10) {
