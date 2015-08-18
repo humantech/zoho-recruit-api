@@ -357,33 +357,24 @@ class Client extends AbstractClient implements ClientInterface
     /**
      * @inheritdoc
      */
-    public function downloadFile($id, $saveToFile, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
-    {
-        $module = 'Candidates';
-        $method = 'downloadFile';
+     public function downloadFile($id, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+     {
+         $module = 'Candidates';
+         $method = 'downloadFile';
 
-        $additionalParams['id'] = $id;
+         $additionalParams['id'] = $id;
 
-        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams), array(), array(
-            'save_to' => $saveToFile
-        ));
+         $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
-        $unserializedData = $this->getUnserializedData($response, $responseFormat);
+         $unserializedData = $this->getUnserializedData($response, $responseFormat);
 
-        if (is_null($unserializedData)) {
-            $fakeResponse = new Response(200, array(), json_encode(array(
-                'response'        => array(
-                    'result'      => array(
-                        'message' => 'Downloaded file with successfully',
-                    ),
-                ),
-            )));
+         $formatterData = array(
+             'download' => $response,
+             'params'   => array('unserializedData' => $unserializedData)
+         );
 
-            $unserializedData = $this->getUnserializedData($fakeResponse, $responseFormat);
-        }
-
-        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
-    }
+         return ResponseFormatter::create($module, $method)->formatter($formatterData)->getOutput();
+     }
 
     /**
      * @inheritdoc
@@ -431,7 +422,7 @@ class Client extends AbstractClient implements ClientInterface
     /**
      * @inheritdoc
      */
-    public function downloadPhoto($module, $id, $saveToFile, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    public function downloadPhoto($module, $id, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
     {
         $method = 'downloadPhoto';
 
@@ -444,25 +435,16 @@ class Client extends AbstractClient implements ClientInterface
 
         $additionalParams['id'] = $id;
 
-        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams), array(), array(
-            'save_to' => $saveToFile
-        ));
+        $response = $this->sendRequest('GET', $this->getUri($module, $method, $responseFormat, $additionalParams));
 
         $unserializedData = $this->getUnserializedData($response, $responseFormat);
 
-        if (is_null($unserializedData)) {
-            $fakeResponse = new Response(200, array(), json_encode(array(
-                'response'        => array(
-                    'result'      => array(
-                        'message' => 'Downloaded photo with successfully',
-                    ),
-                ),
-            )));
+        $formatterData = array(
+            'download' => $response,
+            'params'   => array('unserializedData' => $unserializedData)
+        );
 
-            $unserializedData = $this->getUnserializedData($fakeResponse, $responseFormat);
-        }
-
-        return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
+        return ResponseFormatter::create($module, $method)->formatter($formatterData)->getOutput();
     }
 
     /**

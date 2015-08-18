@@ -7,6 +7,7 @@ use Humantech\Zoho\Recruit\Api\Formatter\Response\GenericResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\Response\GetFieldsResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\Response\GetModulesResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\Response\MessageResponseFormatter;
+use Humantech\Zoho\Recruit\Api\Formatter\Response\DownloadFileResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Formatter\Response\NoDataResponseFormatter;
 
 class ResponseFormatter extends AbstractFormatter implements FormatterInterface
@@ -18,7 +19,9 @@ class ResponseFormatter extends AbstractFormatter implements FormatterInterface
     {
         $this->originalData = $data;
 
-        if (isset($data['response']['nodata'])) {
+        if (isset($data['download'])) {
+            $this->setFormatter(new DownloadFileResponseFormatter());
+        } elseif (isset($data['response']['nodata'])) {
             $this->setFormatter(new NoDataResponseFormatter());
         } elseif (isset($data['response']['result']['message']) || isset($data['response']['success']['message'])) {
             $this->setFormatter(new MessageResponseFormatter());
@@ -45,6 +48,7 @@ class ResponseFormatter extends AbstractFormatter implements FormatterInterface
                 'module' => $this->getModule(),
                 'method' => $this->getMethod(),
                 'data'   => $this->getOriginalData(),
+                'params' => isset($data['params']) ? $data['params'] : null,
             ));
         }
 

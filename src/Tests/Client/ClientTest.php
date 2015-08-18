@@ -490,15 +490,32 @@ class ClientTest extends ClientTestCase
         $client
             ->expects($this->once())
             ->method('sendRequest')
-            ->willReturn(new Response(200, array(), 'fake_binary'))
+            ->willReturn(new Response(200, array('Content-Type' => 'application/x-downLoad'), 'fake_binary'))
         ;
 
         $result = $this->invokeMethod($client, 'downloadFile', array(
-            'fake_id',
-            'fake_save_to_filename'
+            'fake_id'
         ));
 
-        $this->assertEquals('Downloaded file with successfully', $result);
+        $this->assertTrue(is_resource($result));
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     */
+    public function testDownloadFileHttpApiException()
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array('Content-Type' => 'application/json'), 'fake_binary'))
+        ;
+
+        $this->invokeMethod($client, 'downloadFile', array(
+            'fake_id'
+        ));
     }
 
     public function testAssociateJobopening()
@@ -576,16 +593,15 @@ class ClientTest extends ClientTestCase
         $client
             ->expects($this->once())
             ->method('sendRequest')
-            ->willReturn(new Response(200, array(), 'fake_binary'))
+            ->willReturn(new Response(200, array('Content-Type' => 'application/x-downLoad'), 'fake_binary'))
         ;
 
         $result = $this->invokeMethod($client, 'downloadPhoto', array(
             $module,
-            'fake_id',
-            'fake_save_to_filename'
+            'fake_id'
         ));
 
-        $this->assertEquals('Downloaded photo with successfully', $result);
+        $this->assertTrue(is_resource($result));
     }
 
     /**
@@ -597,10 +613,30 @@ class ClientTest extends ClientTestCase
     {
         $client = $this->getClientMock(array('sendRequest'));
 
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(200, array('Content-Type' => 'application/json'), 'fake_binary'))
+        ;
+
+        $this->invokeMethod($client, 'downloadPhoto', array(
+            $module,
+            'fake_id'
+        ));
+    }
+
+    /**
+     * @expectedException \Humantech\Zoho\Recruit\Api\Client\HttpApiException
+     *
+     * @dataProvider dataProviderUploadPhoto
+     */
+    public function testDownloadPhotoInvalidModuleHttpApiException($module)
+    {
+        $client = $this->getClientMock(array('sendRequest'));
+
         $this->invokeMethod($client, 'downloadPhoto', array(
             strtolower($module),
-            'fake_id',
-            'fake_save_to_filename'
+            'fake_id'
         ));
     }
 

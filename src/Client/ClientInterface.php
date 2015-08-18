@@ -109,13 +109,12 @@ interface ClientInterface
 
     /**
      * @param  int    $id
-     * @param  string $saveToFile
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
-     * @return string
+     * @return resource
      */
-    public function downloadFile($id, $saveToFile, array $additionalParams, $responseFormat);
+    public function downloadFile($id, array $additionalParams, $responseFormat);
 
     /**
      * @param  array  $jobIds
@@ -141,13 +140,12 @@ interface ClientInterface
     /**
      * @param  string $module
      * @param  int    $id
-     * @param  string $saveToFile
      * @param  array  $additionalParams
      * @param  string $responseFormat
      *
-     * @return string
+     * @return resource
      */
-    public function downloadPhoto($module, $id, $saveToFile, array $additionalParams, $responseFormat);
+    public function downloadPhoto($module, $id, array $additionalParams, $responseFormat);
 
     /**
      * @param  string $documentData

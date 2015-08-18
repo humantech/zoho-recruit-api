@@ -2,6 +2,7 @@
 
 namespace Humantech\Zoho\Recruit\Api\Tests\Formatter;
 
+use GuzzleHttp\Psr7\Response;
 use Humantech\Zoho\Recruit\Api\Formatter\ResponseFormatter;
 use Humantech\Zoho\Recruit\Api\Tests\TestCase;
 
@@ -41,6 +42,22 @@ class ResponseFormatterTest extends TestCase
         $this->assertTrue($reflection->implementsInterface(
             '\\Humantech\\Zoho\\Recruit\\Api\\Formatter\\FormatterInterface'
         ));
+    }
+
+    public function testDownloadFileResponseFormatter()
+    {
+        $formatter = ResponseFormatter::create('fake_module', 'fake_method');
+
+        $data = array(
+            'download' => new Response(200, array('Content-Type' => 'application/x-downLoad'), 'fake_binary')
+        );
+
+        $formatter->formatter($data);
+
+        $this->assertInstanceOf(
+            '\\Humantech\\Zoho\\Recruit\\Api\\Formatter\\Response\\DownloadFileResponseFormatter',
+            $this->invokeMethod($formatter, 'getFormatter')
+        );
     }
 
     public function testNoDataResponseFormatter()
