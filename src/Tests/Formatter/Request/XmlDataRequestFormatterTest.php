@@ -18,7 +18,7 @@ class XmlDataRequestFormatterTest extends TestCase
         ));
     }
 
-    public function testFormatter()
+    public function testFormatterWithoutBulk()
     {
         $formatter = new XmlDataRequestFormatter();
 
@@ -48,5 +48,35 @@ class XmlDataRequestFormatterTest extends TestCase
 
         $this->assertEquals('value1', (string) $fieldList[0]);
         $this->assertEquals('value2', (string) $fieldList[1]);
+    }
+
+    public function testFormatterWithBulk()
+    {
+        $formatter = new XmlDataRequestFormatter();
+
+        $formatter->formatter(array(
+            'module' => 'Fake',
+            'data'   => array(
+                array(
+                    'key1' => 'value1',
+                ),
+                array(
+                    'key2' => 'value2',
+                ),
+                array(
+                    'key3' => 'value3',
+                ),
+            ),
+        ));
+
+        $simpleXmlObj = simplexml_load_string($formatter->getOutput());
+
+        $this->assertInstanceOf('\\SimpleXMLElement', $simpleXmlObj);
+
+        $this->assertEquals('Fake', $simpleXmlObj->getName());
+
+        $fieldList = $simpleXmlObj->xpath('/Fake/row');
+
+        $this->assertCount(3, $fieldList);
     }
 }
