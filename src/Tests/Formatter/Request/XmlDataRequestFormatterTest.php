@@ -50,14 +50,13 @@ class XmlDataRequestFormatterTest extends TestCase
         $this->assertEquals('value2', (string) $fieldList[1]);
     }
 
-    public function testFormatterWithBulkTrueAndValidData()
+    public function testFormatterWithBulk()
     {
         $formatter = new XmlDataRequestFormatter();
 
         $formatter->formatter(array(
-            'module'  => 'Fake',
-            'is_bulk' => true,
-            'data'     => array(
+            'module' => 'Fake',
+            'data'   => array(
                 array(
                     'key1' => 'value1',
                 ),
@@ -79,84 +78,5 @@ class XmlDataRequestFormatterTest extends TestCase
         $fieldList = $simpleXmlObj->xpath('/Fake/row');
 
         $this->assertCount(3, $fieldList);
-    }
-
-    public function testFormatterWithBulkTrueAndInvalidValidData()
-    {
-        $formatter = new XmlDataRequestFormatter();
-
-        $formatter->formatter(array(
-            'module'  => 'Fake',
-            'is_bulk' => true,
-            'data'     => array(
-                'key1' => 'value1',
-                'key2' => 'value2',
-            ),
-        ));
-
-        $simpleXmlObj = simplexml_load_string($formatter->getOutput());
-
-        $this->assertInstanceOf('\\SimpleXMLElement', $simpleXmlObj);
-
-        $this->assertEquals('Fake', $simpleXmlObj->getName());
-
-        $fieldList = $simpleXmlObj->xpath('/Fake/row');
-
-        $this->assertCount(0, $fieldList);
-    }
-
-    public function testFormatterWithBulkFalseAndValidData()
-    {
-        $formatter = new XmlDataRequestFormatter();
-
-        $formatter->formatter(array(
-            'module'  => 'Fake',
-            'is_bulk' => false,
-            'data'     => array(
-                'key1' => 'value1',
-                'key2' => 'value2',
-            ),
-        ));
-
-        $simpleXmlObj = simplexml_load_string($formatter->getOutput());
-
-        $this->assertInstanceOf('\\SimpleXMLElement', $simpleXmlObj);
-
-        $this->assertEquals('Fake', $simpleXmlObj->getName());
-
-        $fieldList = $simpleXmlObj->xpath('/Fake/row');
-
-        $this->assertCount(1, $fieldList);
-    }
-
-    public function testFormatterWithBulkFalseAndInvalidData()
-    {
-        $formatter = new XmlDataRequestFormatter();
-
-        $formatter->formatter(array(
-            'module'  => 'Fake',
-            'is_bulk' => false,
-            'data'     => array(
-                array(
-                    'key1' => 'value1',
-                ),
-                array(
-                    'key2' => 'value2',
-                ),
-                array(
-                    'key3' => 'value3',
-                ),
-            ),
-        ));
-
-        $simpleXmlObj = simplexml_load_string($formatter->getOutput());
-
-        $this->assertInstanceOf('\\SimpleXMLElement', $simpleXmlObj);
-
-        $this->assertEquals('Fake', $simpleXmlObj->getName());
-
-        $fieldList = $simpleXmlObj->xpath('/Fake/row');
-
-        $this->assertCount(0, $fieldList);
     }
 }

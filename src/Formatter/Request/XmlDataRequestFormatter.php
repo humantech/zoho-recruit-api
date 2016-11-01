@@ -20,7 +20,7 @@ class XmlDataRequestFormatter implements FormatterInterface
 
         $this->data = new \SimpleXMLElement(sprintf('<%s />', $data['module']));
 
-        if (!$this->isBulk($data)) {
+        if (!$this->isArray($data)) {
             $this->withoutBulk($data);
 
             return $this;
@@ -29,16 +29,6 @@ class XmlDataRequestFormatter implements FormatterInterface
         $this->withBulk($data);
 
         return $this;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return bool
-     */
-    protected function isBulk(array $data = [])
-    {
-        return !empty($data['is_bulk']) && true === (bool) $data['is_bulk'];
     }
 
     /**
