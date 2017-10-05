@@ -187,9 +187,15 @@ class Client extends AbstractClient implements ClientInterface
     {
         $method = 'addRecords';
 
-        $additionalParams['xmlData'] = RequestFormatter::create($module, 'addRecords')->formatter($data)->getOutput();
+        $xmlData = RequestFormatter::create($module, 'addRecords')->formatter($data)->getOutput();
 
-        $response = $this->sendRequest('POST', $this->getUri($module, $method, $responseFormat, $additionalParams));
+        $response = $this->sendRequest('POST',
+            $this->getUri($module, $method, $responseFormat, $additionalParams),
+            [
+                'body'    => http_build_query(['xmlData' => $xmlData]),
+                'headers' => ['Content-type' => 'application/x-www-form-urlencoded'],
+            ]
+        );
 
         $unserializedData = $this->getUnserializedData($response, $responseFormat);
 
