@@ -183,7 +183,7 @@ class Client extends AbstractClient implements ClientInterface
     /**
      * @inheritdoc
      */
-    public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON, $returnFullResult = FALSE)
     {
         $method = 'addRecords';
 
@@ -198,7 +198,9 @@ class Client extends AbstractClient implements ClientInterface
         );
 
         $unserializedData = $this->getUnserializedData($response, $responseFormat);
-
+        if ($returnFullResult) {
+          return $unserializedData;
+        }
         return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
