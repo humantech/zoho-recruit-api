@@ -12,7 +12,7 @@ use Humantech\Zoho\Recruit\Api\Unserializer\UnserializerBuilder;
 
 class Client extends AbstractClient implements ClientInterface
 {
-    const API_BASE_URL = 'https://recruit.zoho.com/recruit/private/%s/%s/%s?authtoken=%s';
+    const API_BASE_URL = 'https://recruit.zoho.%s/recruit/private/%s/%s/%s?authtoken=%s';
 
     const API_DEFAULT_VERSION = 2;
 
@@ -28,11 +28,18 @@ class Client extends AbstractClient implements ClientInterface
     protected $authToken;
 
     /**
+     * @var string
+     */
+    protected $domain;
+
+
+    /**
      * @param string $authToken
      */
-    public function __construct($authToken)
+    public function __construct($authToken, $domain='com')
     {
         $this->authToken = $authToken;
+        $this->domain = $domain;
     }
 
     /**
@@ -65,6 +72,7 @@ class Client extends AbstractClient implements ClientInterface
 
         $uri = sprintf(
             self::API_BASE_URL,
+            $this->domain,
             $responseFormat,
             $module,
             $method,
@@ -183,7 +191,7 @@ class Client extends AbstractClient implements ClientInterface
     /**
      * @inheritdoc
      */
-    public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON)
+    public function addRecords($module, $data, array $additionalParams = array(), $responseFormat = self::API_RESPONSE_FORMAT_JSON, $returnFullResult = FALSE)
     {
         $method = 'addRecords';
 
@@ -198,7 +206,9 @@ class Client extends AbstractClient implements ClientInterface
         );
 
         $unserializedData = $this->getUnserializedData($response, $responseFormat);
-
+        if ($returnFullResult) {
+          return $unserializedData;
+        }
         return ResponseFormatter::create($module, $method)->formatter($unserializedData)->getOutput();
     }
 
